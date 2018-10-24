@@ -1,0 +1,67 @@
+<!DOCTTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Email Validation</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>    
+    <body>
+        <div class="container bg-light">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand text-white">Email Registration</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Register</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/success">Email List<span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            <div class="jumbotron jumbotron-fluid bg-light">
+                <div class="container">
+                    <h2 class="text-center">Email validation with DB</h2>
+                    <hr class="my-4">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p class="{{ category }} text-success text-center">{{ message }}</p>
+                            {% endfor %}
+                        <hr class="my-4">
+                        {% endif %}
+                    {% endwith %}
+                    <div class="row justify-content-center w-100">
+                        <a href="/" class="btn btn-primary">Go Back</a>
+                    </div>
+                    <hr class="my-4">
+                    <h4 class="text-center">Current Email Address List:</h4>
+                    <table class="table">
+                        <thead class="thead-light">                            
+                            <tr>
+                                <th scope="col">Email Adress</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col>">Remove?</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for email in emails %}
+                                <form action='/delete' method="post">
+                                    <tr>
+                                        <td><input type="text" readonly class="form-control-plaintext" name="delete_email" value="{{ email.email }}"></td>
+                                        <td>{{ email.date }} </td>
+                                        <td><button type="submit" class="btn btn-danger btn-sm">Delete</button></td>
+                                    </tr>
+                                </form>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
